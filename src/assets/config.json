@@ -1,0 +1,18 @@
+{
+    "DEFAULT_LANGUAGE": [
+        {
+            "id": 1,
+            "displayname": "中文",
+            "isdefault": "false",
+            "language": "zh",
+            "value": ""
+        },
+        {
+            "id": 2,
+            "displayname": "English",
+            "isdefault": "true",
+            "language": "en",
+            "value": ""
+        }
+    ]
+}

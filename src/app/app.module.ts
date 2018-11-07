@@ -2,11 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule ,HttpClient} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UtilService, AuthGuard,CommonCommunicationService } from './shared';
 import { AppModalService, AppLoadingService, AppAlertService, AppHeaderService } from './components';
 import {AppListenerModule} from './components/app-listener/app-listener.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {AppService} from './app.service';
 // Import containers
 import {
   FullLayoutComponent,
@@ -74,7 +77,10 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
-
+export function HttpLoaderFactory(http:HttpClient)
+{
+  return new TranslateHttpLoader(http,'./assets/i18n/','.json')
+}
 @NgModule({
   imports: [
     BrowserModule,
@@ -86,7 +92,14 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     PaginationModule.forRoot(),
     HttpClientModule,
     FormsModule,
-    AppListenerModule
+    AppListenerModule,
+    TranslateModule.forRoot({
+      loader:{
+        provide:TranslateLoader,
+        useFactory:HttpLoaderFactory,
+        deps:[HttpClient]
+      }
+    })
   ],
   declarations: [
     AppComponent,
@@ -98,7 +111,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     AuthGuard, UtilService,
     AppModalService, AppLoadingService, AppAlertService, AppHeaderService,
     CommonCommunicationService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    AppService
   ],
   bootstrap: [AppComponent]
 })
