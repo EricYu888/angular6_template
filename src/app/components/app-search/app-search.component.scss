@@ -1,0 +1,18 @@
+.container {
+    position: relative;
+    ul {
+        z-index: 999;
+        position: absolute;
+        width: 93.5%;
+        padding-left: 0;
+        border: 1px solid lightgray;
+        background-color: lightgray;
+        li {
+            padding-left: 0.75rem;
+            list-style-type: none;
+        }
+        li:hover {
+            background-color: #fff;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+<app-header></app-header>
+<div class="app-body">
+    <app-sidebar></app-sidebar>
+    <!-- Main content -->
+    <main class="main">
+        <!-- Breadcrumb -->
+        <ol class="breadcrumb">
+            <app-breadcrumbs></app-breadcrumbs>
+        </ol>
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- /.conainer-fluid -->
+    </main>
+    <app-aside></app-aside>
+</div>
+<app-modal></app-modal>
+<!-- <app-alert></app-alert> -->
+<app-loading></app-loading>
+<app-footer></app-footer>
+<app-listener></app-listener>

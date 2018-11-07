@@ -1,0 +1,92 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="form-inline">
+                        <div class="form-group filter-form-group">
+                            <label for="shopidEl">产品名称</label>
+                            <input type="text" name="shopidEl" class="form-control" [(ngModel)]="name">
+                        </div>
+                        <!-- <div class="form-group filter-form-group">
+                            <label for="shopidEl">产品编号</label>
+                            <input type="text" name="shopidEl" class="form-control" [(ngModel)]="productNum">
+                        </div> -->
+                        <div class="form-group filter-form-group">
+                            <label *ngIf="isAdmin()">状态</label>
+                            <div *ngIf="isAdmin()">
+                                <select name="stateEl" class="form-control" [(ngModel)]="activation">
+                                              <option value="">所有</option>
+                                              <option value="0">失效</option>
+                                              <option value="1">生效</option>
+                                          </select>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" (click)="getAll();">查询</button>
+                    </div>
+                    <P class="btn-group-row">
+                        <button type="button" class="btn btn-primary active" (click)="jumpToAddProduct();">添加产品</button> &nbsp;&nbsp;
+                        <button *ngIf="canDelete()" type="button" class="btn btn-danger active" (click)="batchDelete();">批量删除</button>
+                    </P>
+                    <app-listener></app-listener>
+                    
+                    <div *ngFor="let alert of alertsDismiss">
+                        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+                    </div>
+                    <table class="table" style="margin-top:18px;text-align:center;">
+                        <thead class="thead-light">
+                            <tr>
+                                <th *ngIf="canDelete()">
+                                    <input type="checkbox" [(ngModel)]="allCheck" (change)="checkChange()" />
+                                </th>
+                                <th>产品名称</th>
+                                <!-- <th>产品编号</th> -->
+                                <th>起售额度(元)</th>
+                                <!-- <th>收益类型</th> -->
+                                <th>年化利率(%)</th>
+                                <th *ngIf="isAdmin()">删除状态</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!loading && listitems.length==0">
+                                <td *ngIf="canDelete() && isAdmin() " colspan="6">没有相关数据</td>
+                                <td *ngIf="canDelete() && !isAdmin() " colspan="5">没有相关数据</td>
+                                <td *ngIf="!canDelete()" colspan="4">没有相关数据</td>
+                            </tr>
+                            <tr *ngIf="loading">
+                                <td *ngIf="canDelete() && isAdmin() " colspan="6">正在载入数据...</td>
+                                <td *ngIf="canDelete() && !isAdmin() " colspan="5">正在载入数据...</td>
+                                <td *ngIf="!canDelete()" colspan="4">正在载入数据...</td>
+                            </tr>
+                            <tr *ngFor="let item of listitems">
+                                <td *ngIf="canDelete()">
+                                    <input type="checkbox" [(ngModel)]="item.checked" (change)="checkChange(item)" />
+                                </td>
+                                <td>{{item.name}}</td>
+                                <!-- <td>{{item.productNum}}</td> -->
+                                <td>{{item.minimum}}</td>
+                                <!-- <td>{{convertRevenueTypeCode(item.revenueType)}}</td> -->
+                                <td>{{item.interestrate}}</td>
+                                <td *ngIf="isAdmin()">
+                                    <span *ngIf="item.activation==1" class="badge badge-success">激活</span>
+                                    <span *ngIf="item.activation==0" class="badge badge-danger">未激活</span>
+                                </td>
+                                <td style="text-align:left;">
+                                    <button type="button" class="btn btn-link" (click)="jumpToDetail(item)">查看详情</button> &nbsp;
+                                    <button type="button" class="btn btn-info" (click)="jumpToModify(item)">修改</button> &nbsp;
+                                    <button *ngIf="isAdmin() && item.activation==0" type="button" class="btn btn-success" (click)="startProduct(item)">启用</button>
+                                    <button *ngIf="isAdmin() && item.activation==1" type="button" class="btn btn-warning" (click)="stopProductByAdmin(item)">禁用</button> &nbsp;
+                                    <button *ngIf="canDelete()" type="button" class="btn btn-danger" (click)="stopProduct(item)">删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination [totalItems]="totalItems" [itemsPerPage]="pageSize" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)" class="pull-right"
+                        [maxSize]="5" [hidden]="!(!loading && listitems.length!=0)"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

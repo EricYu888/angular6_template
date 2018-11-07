@@ -1,0 +1,60 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-inline">
+            <div class="form-group filter-form-group">
+              <label for="userName">部门名称</label>
+              <input type="text" name="department" class="form-control" [(ngModel)]="department">
+            </div>
+            <button type="button" class="btn btn-success" (click)="getAll();">查询</button>
+          </div>
+          <P class="btn-group-row">
+            <button type="button" class="btn btn-primary active" (click)="jumpToAddDept();">添加部门</button> &nbsp;&nbsp;
+          </P>
+
+          <table class="table" style="margin-top:18px;text-align:center;">
+            <thead class="thead-light">
+              <tr>
+                <th>部门名称</th>
+                <th>是否激活</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!loading && listitems.length==0">
+                <td colspan="5">没有相关数据</td>
+              </tr>
+              <tr *ngIf="loading">
+                <td colspan="5">正在载入数据...</td>
+              </tr>
+              <tr *ngFor="let item of listitems">
+                <td>{{item.name}}</td>
+                <td>
+                  <span *ngIf="item.isActivated==1" class="badge badge-success">激活</span>
+                  <span *ngIf="item.isActivated==0" class="badge badge-danger">未激活</span>
+                </td>
+                <td></td>
+                <td></td>
+                <td style="text-align:left;">
+                  <button type="button" class="btn btn-link" (click)="jumpToDetail(item)">查看详情</button> &nbsp;
+                  <button type="button" class="btn btn-info" (click)="jumpToModify(item)">修改</button> &nbsp;
+
+                  <button type="button" class="btn btn-danger" (click)="deleteDept(item)">删除</button>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination [totalItems]="totalItems" [itemsPerPage]="pageSize" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;"
+            firstText="&laquo;" lastText="&raquo;" [boundaryLinks]="true" [rotate]="false" (pageChanged)="pageChanged($event)"
+            class="pull-right" [maxSize]="5" [hidden]="!(!loading && listitems.length!=0)"></pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

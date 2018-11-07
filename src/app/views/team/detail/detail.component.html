@@ -1,0 +1,21 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-body">
+            <app-validator-input #nameEl [startValidator]="hasSubmit" [test]="validatorStr(team.name)" [msg]="'请填写团队名称'" [readonly]="!modify && !add" [labelname]="'团队名称'" [(ngModel)]="team.name" [placeholder]="'请输入团队名称'" [inputType]="'text'"></app-validator-input>
+            <!-- <app-validator-input #teamnumEl [startValidator]="hasSubmit" [test]="validatorStr(team.teamnum)" [msg]="'请填写团队编号'" [readonly]="!modify && !add" [labelname]="'团队编号'" [(ngModel)]="team.teamnum" [placeholder]="'请输入团队编号'" [inputType]="'text'"></app-validator-input> -->
+            <!-- <div class="form-group row" *ngIf="!add">
+                <label class="col-md-2 col-form-label">团队编码</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" [(ngModel)]="teamnum" [disabled]="true">
+                </div>
+            </div> -->
+            <app-validator-select #shopidEl [startValidator]="hasSubmit" [test]="validatorStr(team.shopid)" [msg]="'请选择店铺'" [readonly]="!modify && !add" [labelname]="'所属店铺'" [(ngModel)]="team.shopid" [placeholder]="'其他'" [optionlist]="shoplist"></app-validator-select>
+            <div class="form-actions" *ngIf="add || modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="saveTeam()">保存</button>
+            </div>
+            <div class="form-actions" *ngIf="!add && !modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="jumpToModify()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>

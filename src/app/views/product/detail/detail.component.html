@@ -1,0 +1,37 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-body">
+            <div *ngFor="let alert of alertsDismiss">
+                <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+            </div>
+            <app-validator-input #nameEl [startValidator]="hasSubmit" [test]="validatorQuire(product.name)" (onBlur)="adc($event)"   [msg]="'请填写名称'" [readonly]="!modify && !add" [labelname]="'产品名称'" [(ngModel)]="product.name" [placeholder]="'请输入产品名称'" [placeholder]="'请输入产品名称'" [inputType]="'text'"></app-validator-input>
+            <!-- <app-validator-input #productNumEl [startValidator]="hasSubmit" [test]="validatorQuire(product.productNum)" [msg]="'请填写编码'" [readonly]="!modify && !add" [labelname]="'编码'" [(ngModel)]="product.productNum" [placeholder]="'请输入产品编码'" [placeholder]="'请输入产品编码'"
+                [inputType]="'text'"></app-validator-input> -->
+            <!-- <div class="form-group row" *ngIf="!add&&!modify">
+                <label class="col-md-2 col-form-label">产品编码</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" [(ngModel)]="productNum" [disabled]="true">
+                </div>
+            </div> -->
+            <!-- [helpStr]="'*百分比'" -->
+            <app-validator-input #interestrateEl [startValidator]="hasSubmit" [test]="validatorInterestrate(product.interestrate)" [msg]="'请填写年化利率'" [appendStr]="'%'" [readonly]="!modify && !add" [labelname]="'年化利率'" [(ngModel)]="product.interestrate" [placeholder]="'请输入年化利率'"
+                [placeholder]="'请输入年化利率'" [inputType]="'text'"></app-validator-input>
+            <app-validator-input #minimumEl [startValidator]="hasSubmit" [test]="validatorMoney(product.minimum)" [msg]="'请填写起售额度'" [readonly]="!modify && !add" [labelname]="'起售额度'" [(ngModel)]="product.minimum" [placeholder]="'请输入起售额度'" [placeholder]="'请输入起售额度'"
+                [inputType]="'text'" [appendStr]="'元'"></app-validator-input>
+            <!-- <app-validator-select #revenueTypeEl [startValidator]="hasSubmit" [test]="validatorQuire(product.revenueType)" [msg]="'请选择收益类型'" [readonly]="!modify && !add" [labelname]="'收益类型'" [(ngModel)]="product.revenueType" [optionlist]="revenueTypeList"></app-validator-select> -->
+            <!-- <app-validator-select #assessmentEl [startValidator]="hasSubmit" [test]="validatorQuire(product.assessment)" [msg]="'请选择风险'" [readonly]="!modify && !add" [labelname]="'风险评估'" [(ngModel)]="product.assessment" [optionlist]="assessmentList"></app-validator-select> -->
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label">产品描述</label>
+                <div class="col-md-6">
+                    <textarea type="text" class="form-control" [(ngModel)]="product.remark" [disabled]="!modify && !add" placeholder="请输入产品描述"></textarea>
+                </div>
+            </div>
+            <div class="form-actions" *ngIf="add || modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="saveProduct()">保存</button>
+            </div>
+            <div class="form-actions" *ngIf="!add && !modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="jumpToModify()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>

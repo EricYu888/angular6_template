@@ -1,0 +1,91 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-inline">
+                        <div class="form-group filter-form-group">
+                            <label for="shopidEl">店铺名称</label>
+                            <input type="text" name="shopidEl" class="form-control" [(ngModel)]="name">
+                        </div>
+                        <div class="form-group filter-form-group" *ngIf="isAdmin()">
+                            <label *ngIf="isAdmin()" for="stateEl">状态</label>
+                            <select name="stateEl" class="form-control" [(ngModel)]="activation">
+                                <option value="">所有</option>
+                                <option value="0">失效</option>
+                                <option value="1">生效</option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="btn btn-success" (click)="getAll();">查询</button>
+                    </div>
+
+
+                    <P class="btn-group-row">
+                        <button type="button" class="btn btn-primary active" (click)="jumpToAddShop();">添加店铺</button>
+                        &nbsp;&nbsp;
+                        <button *ngIf="canDelete()" type="button" class="btn btn-danger active" (click)="batchDelete();">批量删除</button>
+                    </P>
+                    <!-- <div *ngFor="let alert of alertsDismiss">
+                        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+                    </div>-->
+                    <table class="table" style="margin-top:18px;text-align:center;">
+                        <thead class="thead-light">
+                            <tr>
+                                <th *ngIf="canDelete()">
+                                    <input type="checkbox" [(ngModel)]="allCheck" (change)="checkChange()" />
+                                </th>
+                                <th>店铺名称</th>
+                                <th>联系电话</th>
+                                <th>地址</th>
+                                <th *ngIf="isAdmin()">删除状态</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!loading && listitems.length==0">
+                                <td *ngIf="canDelete() && isAdmin() " colspan="6">没有相关数据</td>
+                                <td *ngIf="canDelete() && !isAdmin() " colspan="5">没有相关数据</td>
+                                <td *ngIf="!canDelete()" colspan="4">没有相关数据</td>
+                            </tr>
+                            <tr *ngIf="loading">
+                                <td *ngIf="canDelete() && isAdmin() " colspan="6">正在载入数据...</td>
+                                <td *ngIf="canDelete() && !isAdmin() " colspan="5">正在载入数据...</td>
+                                <td *ngIf="!canDelete()" colspan="4">正在载入数据...</td>
+                            </tr>
+                            <tr *ngFor="let item of listitems">
+                                <td *ngIf="canDelete()">
+                                    <input type="checkbox" [(ngModel)]="item.checked" (change)="checkChange(item)" />
+                                </td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.phone}}</td>
+                                <td>{{item.address}}</td>
+                                <td *ngIf="isAdmin()">
+                                    <span *ngIf="item.activation==1" class="badge badge-success">激活</span>
+                                    <span *ngIf="item.activation==0" class="badge badge-danger">未激活</span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:left;">
+                                    <button type="button" class="btn btn-link" (click)="jumpToDetail(item)">查看详情</button>
+                                    &nbsp;
+                                    <button type="button" class="btn btn-info" (click)="jumpToModify(item)">修改</button>&nbsp;
+                                    <button *ngIf="isAdmin() && item.activation==0" type="button" class="btn btn-success"
+                                        (click)="startShop(item)">启用</button>
+                                    <button *ngIf="isAdmin() && item.activation==1" type="button" class="btn btn-warning"
+                                        (click)="stopStopByAdmin(item)">禁用</button>&nbsp;
+                                    <button *ngIf="canDelete()" type="button" class="btn btn-danger" (click)="stopShop(item)">删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination [totalItems]="totalItems" [itemsPerPage]="pageSize" class="pagination-sm" previousText="&lsaquo;"
+                        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [boundaryLinks]="true" [rotate]="false"
+                        (pageChanged)="pageChanged($event)" class="pull-right" [maxSize]="5" [hidden]="!(!loading && listitems.length!=0)"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

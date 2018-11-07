@@ -1,0 +1,61 @@
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #fff;
+    border: 0;
+}
+
+.form-control:disabled::-webkit-input-placeholder,
+.form-control[readonly]::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.form-control:disabled::-webkit-input-placeholder,
+.form-control[readonly]::-moz-placeholder {
+    color: #fff;
+}
+
+.form-control:disabled::-webkit-input-placeholder,
+.form-control[readonly]::-moz-placeholder {
+    color: #fff;
+}
+
+.form-control:disabled::-webkit-input-placeholder,
+.form-control[readonly]::-ms-input-placeholder {
+    color: #fff;
+}
+
+select:disabled,
+select[readonly] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-color: white;
+    border: 0;
+}
+
+textarea:disabled,
+textarea[readonly] {
+    resize: none;
+}
+
+// customize
+.btn-group-row {
+    margin-top: 15px;
+}
+
+.filter-form-group {
+    margin-right: 35px;
+    label {
+        margin-right: 10px;
+    }
+    .form-control {}
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

@@ -1,0 +1,7 @@
+<ng-template #confirmModal>
+    <div class="modal-body text-center">
+        <p>{{modalContent}}</p>
+        <button type="button" class="btn btn-primary" (click)="clickOk()">{{type==='confirm'?"确认":"关闭"}}</button>
+        <button type="button" class="btn btn-secondary" *ngIf="type==='confirm'" (click)="clickCancel()">取消</button>
+    </div>
+</ng-template>

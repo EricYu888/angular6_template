@@ -1,0 +1,21 @@
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="{{tagName}}">{{labelname}}</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <div *ngIf="showIcon()" class="input-group-prepend">
+                <span class="input-group-text"><i class="{{iconClass}}"></i></span>
+            </div>
+            <input type="{{inputType}}" name="{{tagName}}" class="form-control" placeholder="{{placeholder}}"
+                [(ngModel)]="_value" [disabled]="readonly" [ngClass]="{'is-invalid':invalidate()}" (input)="inputValueChange()"
+                (compositionend)="inputValueChange()" (focus)="inputFocus($event)" (blur)="inputBlur($event)"
+                (keyup.enter)="inputEnter($event);">
+            <div class="input-group-append" *ngIf="showAppend() && !readonly">
+                <span class="input-group-text">{{appendStr}}</span>
+            </div>
+        </div>
+        <span [ngStyle]="{'display':showHelpStr()&&!invalidate()&&!readonly?'inline-block':'none'}" class="help-block">{{helpStr}}</span>
+        <div class="invalid-feedback" [ngStyle]="{'display':invalidate()?'inline-block':'none'}">
+            {{msg}}
+        </div>
+    </div>
+</div>

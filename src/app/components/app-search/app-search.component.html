@@ -1,0 +1,9 @@
+<div class="container">
+    <input type="text" class="form-control {{cssClass}}" placeholder="{{placeholder}}" [(ngModel)]='_value' (compositionend)="inputInput($event)"
+     (input)="inputInput($event)" (focus)="inputFocus($event)" (blur)="inputBlur($event)">
+    <!-- [ngStyle]="{'display': hasFocus ? 'block':'none'}" -->
+    <ul [ngStyle]="{'display': hasFocus ? 'block':'none'}">
+        <li *ngIf="_value!=''&&(!resultlist||resultlist.length==0)">没有此数据</li>
+        <li *ngFor="let item of resultlist" (click)="itemClick(item)">{{item.name}}</li>
+    </ul>
+</div>

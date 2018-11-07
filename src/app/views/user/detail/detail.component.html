@@ -1,0 +1,37 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-body">
+            <div *ngFor="let alert of alertsDismiss">
+                <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+            </div>
+            <app-validator-input #nameEl [startValidator]="hasSubmit" [test]="validatorStr(person.name)" [msg]="'请填写姓名'" [readonly]="!modify && !add" [labelname]="'姓名'" [(ngModel)]="person.name" [placeholder]="'请输入姓名'" [placeholder]="'请输入姓名'" [inputType]="'text'"></app-validator-input>
+            <app-validator-input #phoneEl [startValidator]="hasSubmit" [test]="validatorPhone(person.phone)" [msg]="'请填写电话号'" [readonly]="!modify && !add" [labelname]="'电话'" [(ngModel)]="person.phone" [placeholder]="'请输入电话'" [inputType]="'text'"></app-validator-input>
+            <app-validator-select #roleEl [startValidator]="hasSubmit" [test]="validatorStr(person.role)" [msg]="'请选择角色'" [readonly]="!modify && !add" [labelname]="'角色'" [(ngModel)]="person.role" [placeholder]="'请选择角色'" [optionlist]="rolelist" (onChange)="roleChange($event)"></app-validator-select>
+            <div *ngIf="canShowLoginInfo()">
+                <app-validator-input #codeEl [startValidator]="hasSubmit" [test]="validatorStr(person.code)" [msg]="'请填写登录名'" [readonly]="!modify && !add" [labelname]="'登录名'" [(ngModel)]="person.code" [placeholder]="'请输入登录名'" [inputType]="'text'"></app-validator-input>
+                <div class="form-group row" *ngIf="(add || modify) && !resetPasswordFlag">
+                    <label class="col-md-2 col-form-label">设置密码</label>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-success active" (click)="resetPassword();">设置密码</button>
+                    </div>
+                </div>
+                <app-validator-input *ngIf="resetPasswordFlag" #passwordEl [startValidator]="hasSubmit" [test]="validatorPaswd(person.password)" [msg]="'请填写密码'" [readonly]="!modify && !add" [labelname]="'密码'" [(ngModel)]="person.password" [placeholder]="'请输入密码'" [inputType]="'password'"></app-validator-input>
+                <app-validator-input *ngIf="resetPasswordFlag" #confirmpasswordEl [startValidator]="hasSubmit" [test]="validatorConfirmPaswd(confirmpassword)" [msg]="'两次密码不一致'" [readonly]="!modify && !add" [labelname]="'确认密码'" [(ngModel)]="confirmpassword" [placeholder]="'请在输入一遍密码'"
+                    [inputType]="'password'"></app-validator-input>
+            </div>
+            <!-- <app-validator-input #idnumEl [startValidator]="hasSubmit" [test]="validatorStr(person.idnum)" [msg]="'请填写身份证号'" [labelname]="'身份证号'" [readonly]="!modify && !add" [(ngModel)]="person.idnum" [placeholder]="'请输入身份证号'" [inputType]="'text'"></app-validator-input> -->
+
+            <!-- [placeholder]="'其他'" -->
+            <app-validator-select *ngIf="person.role=='3' || person.role=='4'" #shopEl [startValidator]="hasSubmit" [test]="validatorPart(person.shopid)" [msg]="'请选择所属店铺'" [readonly]="!modify && !add" [labelname]="'所属店铺'" [(ngModel)]="person.shopid" [optionlist]="shoplist"
+                [placeholder]="!add&&!modify?'其他':''" (onChange)="loadTeamInfo($event)"></app-validator-select>
+            <app-validator-select *ngIf="person.role=='3' || person.role=='4'" #teamEl [startValidator]="hasSubmit" [test]="validatorPart(person.teamid)" [msg]="'请选择所属团队'" [readonly]="!modify && !add" [labelname]="'所属团队'" [(ngModel)]="person.teamid" [optionlist]="teamlist"
+                [placeholder]="!add&&!modify?'其他':''"></app-validator-select>
+            <div class="form-actions" *ngIf="add || modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="saveUser()">保存</button>
+            </div>
+            <div class="form-actions" *ngIf="!add && !modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="jumpToModify()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>

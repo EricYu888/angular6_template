@@ -1,0 +1,24 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-body">
+            <div *ngFor="let alert of alertsDismiss">
+                <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+            </div>
+            <app-validator-input #nameEl [startValidator]="hasSubmit" [test]="validatorStr(custom.name)" [msg]="'请填写客户姓名'" [readonly]="!modify && !add" [labelname]="'客户姓名'" [(ngModel)]="custom.name" [placeholder]="'请输入客户姓名'" [inputType]="'text'"></app-validator-input>
+            <app-validator-select #sexEl [startValidator]="hasSubmit" [test]="validatorStr(custom.sex)" [msg]="'请选择性别'" [readonly]="!modify && !add" [labelname]="'性别'" [(ngModel)]="custom.sex" [placeholder]="'请选择性别'" [optionlist]="sexlist"></app-validator-select>
+            <app-validator-input #idnumEl [startValidator]="hasSubmit" [test]="validatorIdnum(custom.idnum)" [msg]="'请填写身份证号'" [readonly]="!modify && !add" [labelname]="'身份证号'" [(ngModel)]="custom.idnum" [placeholder]="'请输入身份证号'" [inputType]="'text'"></app-validator-input>
+            <app-validator-input #bankEl [startValidator]="hasSubmit" [test]="validatorStr(custom.bank)" [msg]="'请填写开户行'" [readonly]="!modify && !add" [labelname]="'开户行'" [(ngModel)]="custom.bank" [placeholder]="'请输入开户行'" [inputType]="'text'"></app-validator-input>
+            <app-validator-input #cardnumEl [startValidator]="hasSubmit" [test]="validatorCardNum(custom.cardnum)" [msg]="'请填写有效的银行卡号'" [readonly]="!modify && !add" [labelname]="'银行卡号'" [(ngModel)]="custom.cardnum" [placeholder]="'请输入银行卡号'" [inputType]="'text'"></app-validator-input>
+            <!-- <app-validator-input #cardtypeEl [msg]="'请填写银行卡类型'" [readonly]="!modify && !add" [labelname]="'银行卡类型'" [(ngModel)]="custom.cardtype" [placeholder]="'请输入银行卡类型'" [inputType]="'text'"></app-validator-input> -->
+            <app-validator-input #phoneEl [startValidator]="hasSubmit" [test]="validatorPhone(custom.phone)" [msg]="'请填写电话'" [readonly]="!modify && !add" [labelname]="'电话'" [(ngModel)]="custom.phone" [placeholder]="'请输入电话'" [inputType]="'text'"></app-validator-input>
+            <app-validator-select #shopidEl [startValidator]="hasSubmit" [test]="validatorStr(custom.shopid)" [msg]="'请选择店铺'" [readonly]="isOperater() || (!modify && !add)" [labelname]="'所属店铺'" [(ngModel)]="custom.shopid" [placeholder]="isOperater()||(!modify && !add)?'其他':''"
+                [optionlist]="shoplist"></app-validator-select>
+            <div class="form-actions" *ngIf="add || modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="saveCustom()">保存</button>
+            </div>
+            <div class="form-actions" *ngIf="!add && !modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="jumpToModify()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>

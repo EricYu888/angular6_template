@@ -1,0 +1,6 @@
+<div class="alertContent">
+     CCC
+    <div *ngFor="let alert of alertsDismiss">
+        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+    </div>
+</div>

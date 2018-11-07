@@ -1,0 +1,12 @@
+<div class="form-group row">
+    <label class="col-md-2 col-form-label" for="{{tagName}}">{{labelname}}</label>
+    <div class="col-md-6">
+        <select #role name="{{tagName}}" class="form-control" [ngClass]="{'is-invalid':invalidate()}" [(ngModel)]="_value" [disabled]="readonly" (change)="selectValueChange($event)">
+              <option *ngIf="placeholder!=null && placeholder!=''" value="">{{placeholder}}</option>
+              <option *ngFor="let item of optionlist" value="{{item.key}}">{{item.value}}</option>
+            </select>
+        <div class="invalid-feedback" [ngStyle]="{'display':invalidate()?'inline-block':'none'}">
+            {{msg}}
+        </div>
+    </div>
+</div>

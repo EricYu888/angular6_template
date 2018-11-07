@@ -1,0 +1,25 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-body">
+           <!-- <div *ngFor="let alert of alertsDismiss">
+                <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+            </div>-->
+            <app-validator-input #nameEl [startValidator]="hasSubmit" [test]="validatorQuire(shop.name)" [msg]="'请填写店铺名称'" [readonly]="!modify && !add" [labelname]="'店铺名称'" [(ngModel)]="shop.name" [placeholder]="'请输入店铺名称'" [placeholder]="'请输入店铺名称'" [inputType]="'text'"></app-validator-input>
+            <!-- <div class="form-group row" *ngIf="!add">
+                <label class="col-md-2 col-form-label">店铺编码</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" [(ngModel)]="shopnum" [disabled]="true">
+                </div>
+            </div> -->
+            <app-validator-input #phoneEl [startValidator]="hasSubmit" [test]="validatorPhone(shop.phone)" [msg]="'请填写联系电话'" [readonly]="!modify && !add" [labelname]="'联系电话'" [(ngModel)]="shop.phone" [placeholder]="'请输入联系电话'" [inputType]="'text'"></app-validator-input>
+            <app-validator-input #addressEl [readonly]="!modify && !add" [startValidator]="hasSubmit" [msg]="'请填写地址'" [test]="validatorQuire(shop.address)" [labelname]="'地址'" [(ngModel)]="shop.address" [placeholder]="'请输入地址'" [inputType]="'text'"></app-validator-input>
+            <div class="form-actions" *ngIf="add || modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="saveShop()">保存</button>
+            </div>
+
+            <div class="form-actions" *ngIf="!add && !modify">
+                <button type="submit" class="btn btn-primary pull-right" (click)="jumpToModify()">修改</button>
+            </div>
+        </div>
+    </div>
+</div>
