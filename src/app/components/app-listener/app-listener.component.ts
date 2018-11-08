@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { CommonCommunicationService } from './../../shared/services/listener-service/observable-service';
 import { Subscription } from 'rxjs';
 
@@ -10,18 +10,19 @@ import { Subscription } from 'rxjs';
 })
 export class AppListenerComponent implements OnInit, OnDestroy {
 
-  
+  @Input() public age: any;
+  @Output() public onClick = new EventEmitter<any>();
 
   subscription: Subscription;
-  user={
-    name:"233"
+  user = {
+    name: "233" 
   };
   constructor(public communicationService: CommonCommunicationService) { }
 
   ngOnInit() {
     this.subscription = this.communicationService.Status$.subscribe(message => {
       console.log(message);
-      this.user=message;
+      this.user = message;
     });
   }
 
