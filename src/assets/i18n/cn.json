@@ -1,3 +1,9 @@
 {
-    "language":"语言"
+    "configuration": {
+        "language": "语言",
+        "button": {
+            "save": "保存",
+            "cancel": "取消"
+        }
+    }
 }

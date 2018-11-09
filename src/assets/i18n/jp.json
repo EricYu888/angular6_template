@@ -1,0 +1,13 @@
+{
+    "configuration": {
+        "language": "言語",
+        "button": {
+            "save": "保存する",
+            "language": "言語",
+            "button": {
+                "save": "保存する",
+                "cancel": "取り消す"
+            }
+        }
+    }
+}

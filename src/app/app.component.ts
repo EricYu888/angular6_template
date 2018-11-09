@@ -14,32 +14,39 @@ declare var require: any;
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+ 
   constructor(
     private router: Router,
     private translate: TranslateService,
     private service: AppService,
     private util: UtilService
   ) {
-    translate.addLangs(['cn', 'en', 'jp']);
-    translate.setDefaultLang('cn');
-    const browserLanguage = translate.getBrowserLang();
-    console.log(browserLanguage)
-    const localLang = this.util.getLocalStorage(SESSION_STORAGE.LANGUAGE);
-    if (localLang) {
-      translate.use(localLang);
-    }
-    else {
-      translate.use(browserLanguage.match(/en|cn|jp/) ? browserLanguage : 'cn');
-    }
-    try {
-      let config = require('./../assets/config.json');
-      let lauguages = JSON.parse(JSON.stringify(config.DEFAULT_LANGUAGE));
-      if (!this.util.getLocalStorage(LANGUAGE.LIST_KEY)) {
-        this.util.setLocalStorage(LANGUAGE.LIST_KEY, JSON.stringify(lauguages))
-        // translate.translations[]
-      }
-    }
-    catch{ }
+    // translate.addLangs(['cn', 'en', 'jp']);
+    // translate.setDefaultLang('cn');
+    // const browserLanguage = translate.getBrowserLang();
+    // const localLang = this.util.getLocalStorage(SESSION_STORAGE.LANGUAGE);
+    // if (localLang) {
+    //   translate.use(localLang);
+    // }
+    // else {
+    //   translate.use(browserLanguage.match(/en|cn|jp/) ? browserLanguage : 'cn');
+    // }
+    // try {
+    //   // let config = require('./../assets/config.json');
+    //   // let lauguages = JSON.parse(JSON.stringify(config.DEFAULT_LANGUAGE));
+    //   // if (!this.util.getLocalStorage(LANGUAGE.LIST_KEY)) {
+    //   //   this.util.setLocalStorage(LANGUAGE.LIST_KEY, JSON.stringify(lauguages))
+    //   // }
+    // }
+    // catch{ }
+    // // this.service.registerLanguageChangeListener(result=>{
+    // //   this.loading=result;
+    // // })
+
+    this.translate.addLangs(["cn", "en","jp"]);
+    this.translate.setDefaultLang("cn");
+    const browserLang = this.translate.getBrowserLang();
+    this.translate.use(browserLang.match(/cn|en|jp/) ? browserLang : 'cn');
   }
 
   ngOnInit() {

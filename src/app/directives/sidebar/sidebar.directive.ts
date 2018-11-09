@@ -24,7 +24,6 @@ export class SidebarMinimizeDirective {
 
   @HostListener('click', ['$event'])
   toggleOpen($event: any) {
-    alert(1232)
     $event.preventDefault();
     document.querySelector('body').classList.toggle('sidebar-minimized');
   }

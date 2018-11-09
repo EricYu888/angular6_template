@@ -4,7 +4,7 @@ import { UtilService } from '../../shared/';
 import { AppModalService } from '../../components';
 import { ProductService } from '../../shared/services/product.service';
 import { CommonCommunicationService } from './../../shared/services/listener-service/observable-service';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   templateUrl: 'product.component.html',
   encapsulation: ViewEncapsulation.None
@@ -33,8 +33,9 @@ export class ProductComponent implements OnInit {
     public util: UtilService,
     public productService: ProductService,
     public appModalService: AppModalService,
-    public commoncommunicationService:CommonCommunicationService
-    ) {
+    public commoncommunicationService: CommonCommunicationService,
+    public translate: TranslateService
+  ) {
     if (!this.totalItems) { this.totalItems = 0 }
     if (!this.pageNum) { this.pageNum = 1 }
     if (!this.pageSize) { this.pageSize = 10 }
@@ -51,6 +52,10 @@ export class ProductComponent implements OnInit {
     //     this.addMsg('success','修改成功');
     //   }
     // });
+
+    this.translate.get('configuration.language').subscribe(res=>{
+      console.log(res)
+    })
   }
 
   pageChanged(e): void {
@@ -59,6 +64,8 @@ export class ProductComponent implements OnInit {
     }
     // this.loadData();
   }
+
+  
 
   checkChange(item) {
     if (!item) {
@@ -217,14 +224,14 @@ export class ProductComponent implements OnInit {
   }
 
   getAll() {
-    let data={
-      name:'Eric',
-      sex:"1",
-      age:27
+    let data = {
+      name: 'Eric',
+      sex: "1",
+      age: 27
     }
     console.log("product publish ");;
     this.commoncommunicationService.publishData(data);
-   
+
     // this.pageNum = 1;
     // this.loadData();
   }
