@@ -3,6 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/cor
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { UtilService, AuthGuard, CommonCommunicationService } from './shared';
 import { AppModalService, AppLoadingService, AppAlertService, AppHeaderService } from './components';
@@ -77,9 +78,10 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
-export function HttpLoaderFactory(http: HttpClient) {
+export function createTranslateHttpLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -90,12 +92,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProgressbarModule.forRoot(),
     PaginationModule.forRoot(),
     HttpClientModule,
+
     FormsModule,
     AppListenerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useFactory: (createTranslateHttpLoader),
         deps: [HttpClient]
       }
     })
@@ -116,3 +119,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

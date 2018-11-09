@@ -11,8 +11,8 @@ import { AppValidatorModule } from '../../components';
 import { ShopComponent } from './shop.component';
 import { DetailComponent } from './detail/detail.component';
 import { ShopRoutingModule } from './shop-routing.module';
-import {CommonCommunicationService} from './../../shared/services/listener-service/observable-service';
-
+import { CommonCommunicationService } from './../../shared/services/listener-service/observable-service';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,11 +21,12 @@ import {CommonCommunicationService} from './../../shared/services/listener-servi
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     AppValidatorModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    TranslateModule
   ],
-  declarations: [ ShopComponent, DetailComponent ],
-  providers: [ 
-    HttpService, UtilService, ShopService,CommonCommunicationService
+  declarations: [ShopComponent, DetailComponent],
+  providers: [
+    HttpService, UtilService, ShopService, CommonCommunicationService
   ]
 })
 export class ShopModule { }

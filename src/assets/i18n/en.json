@@ -1,9 +1,4 @@
 {
-    "configuration": {
-        "language": "language",
-        "button": {
-            "save": "Save",
-            "cancel": "Cancel"
-        }
-    }
+    "welcome":"welcome to this app",
+    "getName":"hello I am {{name}}"
 }

@@ -52,7 +52,7 @@ export class ProductComponent implements OnInit {
     //     this.addMsg('success','修改成功');
     //   }
     // });
-
+    console.log(123123)
     this.translate.get('configuration.language').subscribe(res=>{
       console.log(res)
     })
@@ -65,7 +65,10 @@ export class ProductComponent implements OnInit {
     // this.loadData();
   }
 
-  
+  changeTranslate()
+  {
+
+  }
 
   checkChange(item) {
     if (!item) {

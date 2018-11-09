@@ -21,42 +21,18 @@ export class AppComponent implements OnInit {
     private service: AppService,
     private util: UtilService
   ) {
-    // translate.addLangs(['cn', 'en', 'jp']);
-    // translate.setDefaultLang('cn');
-    // const browserLanguage = translate.getBrowserLang();
-    // const localLang = this.util.getLocalStorage(SESSION_STORAGE.LANGUAGE);
-    // if (localLang) {
-    //   translate.use(localLang);
-    // }
-    // else {
-    //   translate.use(browserLanguage.match(/en|cn|jp/) ? browserLanguage : 'cn');
-    // }
-    // try {
-    //   // let config = require('./../assets/config.json');
-    //   // let lauguages = JSON.parse(JSON.stringify(config.DEFAULT_LANGUAGE));
-    //   // if (!this.util.getLocalStorage(LANGUAGE.LIST_KEY)) {
-    //   //   this.util.setLocalStorage(LANGUAGE.LIST_KEY, JSON.stringify(lauguages))
-    //   // }
-    // }
-    // catch{ }
-    // // this.service.registerLanguageChangeListener(result=>{
-    // //   this.loading=result;
-    // // })
-
-    this.translate.addLangs(["cn", "en","jp"]);
-    this.translate.setDefaultLang("cn");
+    this.translate.addLangs(["zh", "en","jp"]);
+    this.translate.setDefaultLang("zh");
     const browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang.match(/cn|en|jp/) ? browserLang : 'cn');
+    this.translate.use(browserLang.match(/zh|en|jp/) ? browserLang : 'zh');
   }
 
   ngOnInit() {
-    this.router.events.subscribe((evt) => {
-      if (!(evt instanceof NavigationEnd)) {
-        return;
-      }
-      window.scrollTo(0, 0)
-    });
-
-
+    // this.router.events.subscribe((evt) => {
+    //   if (!(evt instanceof NavigationEnd)) {
+    //     return;
+    //   }
+    //   window.scrollTo(0, 0)
+    // });
   }
 }

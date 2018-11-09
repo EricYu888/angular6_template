@@ -4,13 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UtilService } from '../../shared/';
 import { ShopService } from '../../shared/services/shop.service';
 import { AppModalService } from '../../components/app-modal/app-modal-service';
-import {CommonCommunicationService} from './../../shared/services/listener-service/observable-service';
-import {Subscription} from 'rxjs'
+import { CommonCommunicationService } from './../../shared/services/listener-service/observable-service';
+import { Subscription } from 'rxjs'
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   templateUrl: 'shop.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class ShopComponent implements OnInit{
+export class ShopComponent implements OnInit {
 
   totalItems: number;
   pageNum: number;
@@ -29,8 +30,8 @@ export class ShopComponent implements OnInit{
   name = '';
   activation = '';
   subscription: Subscription;
-  constructor(public router: Router, public activatedRoute: ActivatedRoute, public util: UtilService, 
-    public appModalService: AppModalService, public shopService: ShopService,public communicationService:CommonCommunicationService) {
+  constructor(public router: Router, public activatedRoute: ActivatedRoute, public util: UtilService, public translate: TranslateService,
+    public appModalService: AppModalService, public shopService: ShopService, public communicationService: CommonCommunicationService) {
     if (!this.totalItems) { this.totalItems = 0 }
     if (!this.pageNum) { this.pageNum = 1 }
     if (!this.pageSize) { this.pageSize = 10 }
@@ -53,9 +54,16 @@ export class ShopComponent implements OnInit{
     //   console.log(res);
     // })
 
-    this.subscription=this.communicationService.Status$.subscribe(message=>{
+    this.subscription = this.communicationService.Status$.subscribe(message => {
+      console.log(message)
+    });
+
+    // setTimeout(() => {
+    this.translate.get("welcome").subscribe((message: string) => {
       console.log(message)
     })
+    // });
+
   }
 
   pageChanged(e): void {
@@ -65,14 +73,14 @@ export class ShopComponent implements OnInit{
     // this.loadData();
   }
 
-  checkChange(item){
-    if(!item){
-      this.listitems.forEach((item, index)=>{
+  checkChange(item) {
+    if (!item) {
+      this.listitems.forEach((item, index) => {
         item.checked = this.allCheck;
       });
-    }else{
-      for(var i=0,len=this.listitems.length;i<len;i++){
-        if(!this.listitems[i].checked){
+    } else {
+      for (var i = 0, len = this.listitems.length; i < len; i++) {
+        if (!this.listitems[i].checked) {
           this.allCheck = false;
           return;
         }
@@ -103,12 +111,12 @@ export class ShopComponent implements OnInit{
         activation: "1"
       }).then((res) => {
         if (res.code == 'SUCCESS') {
-          this.addMsg('success','启用成功');
-          this.getAll(); 
-        }else if (res.ode == 'EXPIRE') {
+          this.addMsg('success', '启用成功');
+          this.getAll();
+        } else if (res.ode == 'EXPIRE') {
           this.router.navigate(['/logout'], { replaceUrl: true });
-        }else{
-          this.addMsg('danger',res.msg);
+        } else {
+          this.addMsg('danger', res.msg);
         }
       });
     }
@@ -131,12 +139,12 @@ export class ShopComponent implements OnInit{
       this.shopService.deleteById({
         shopid: shopid
       }).then((res) => {
-        if (res.code == 'SUCCESS') {          
-          this.addMsg('success','删除成功');
-          this.getAll();        
-        }else if (res.ode == 'EXPIRE') {
+        if (res.code == 'SUCCESS') {
+          this.addMsg('success', '删除成功');
+          this.getAll();
+        } else if (res.ode == 'EXPIRE') {
           this.router.navigate(['/logout'], { replaceUrl: true });
-        }else{
+        } else {
           this.addMsg('danger', res.msg);
         }
       });
@@ -162,12 +170,12 @@ export class ShopComponent implements OnInit{
         activation: "0"
       }).then((res) => {
         if (res.code == 'SUCCESS') {
-          this.addMsg('success','禁用成功');
-          this.getAll(); 
-        }else if (res.ode == 'EXPIRE') {
+          this.addMsg('success', '禁用成功');
+          this.getAll();
+        } else if (res.ode == 'EXPIRE') {
           this.router.navigate(['/logout'], { replaceUrl: true });
-        }else{
-          this.addMsg('danger',res.msg);
+        } else {
+          this.addMsg('danger', res.msg);
         }
       });
     }
@@ -189,8 +197,8 @@ export class ShopComponent implements OnInit{
         checklist.push(item.id);
       }
     });
-    if(checklist.length==0){
-      this.addMsg('danger','没有选择删除项');
+    if (checklist.length == 0) {
+      this.addMsg('danger', '没有选择删除项');
       return;
     }
     let okCallback = () => {
@@ -200,13 +208,13 @@ export class ShopComponent implements OnInit{
           list.push(item.id);
         }
       });
-      this.shopService.batchDelete({list: list}).then((res) => {
+      this.shopService.batchDelete({ list: list }).then((res) => {
         if (res.code == 'SUCCESS') {
-          this.addMsg('success','删除成功');
+          this.addMsg('success', '删除成功');
           this.loadData();
-        }else if (res.ode == 'EXPIRE') {
-          this.router.navigate(['/logout'], { replaceUrl:  true });
-        }else{
+        } else if (res.ode == 'EXPIRE') {
+          this.router.navigate(['/logout'], { replaceUrl: true });
+        } else {
           this.addMsg('danger', res.msg);
         }
       });
@@ -214,9 +222,9 @@ export class ShopComponent implements OnInit{
     let cancelCallback = () => {
     }
     this.appModalService.showModal({
-                type: "confirm",
-        modalContent: "您确定要删除选中的店铺么?",
-          okcallback: okCallback,
+      type: "confirm",
+      modalContent: "您确定要删除选中的店铺么?",
+      okcallback: okCallback,
       cancelcallback: cancelCallback
     });
   }
@@ -224,11 +232,11 @@ export class ShopComponent implements OnInit{
   getAll() {
     // this.pageNum = 1;
     // this.loadData();
-    let okCallback=()=>{
+    let okCallback = () => {
 
     }
-    let cancelCallback=()=>{
-      
+    let cancelCallback = () => {
+
     }
     this.appModalService.showModal({
       type: "confirm",
@@ -242,7 +250,7 @@ export class ShopComponent implements OnInit{
     return this.util.isAdmin();
   }
 
-  canDelete(){
+  canDelete() {
     return this.util.isAdmin() || this.util.isManager();
   }
 

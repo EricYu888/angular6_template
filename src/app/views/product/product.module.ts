@@ -10,14 +10,16 @@ import { AppValidatorModule } from '../../components';
 import { ProductComponent } from './product.component';
 import { DetailComponent } from './detail/detail.component';
 import { ProductRoutingModule } from './product-routing.module';
-import {CommonCommunicationService} from './../../shared/services/listener-service/observable-service';
-// import {AppHeaderComponent} from './../../components/app-header/app-header.component';
-import {AppListenerModule} from './../../components/app-listener/app-listener.module'
+import { CommonCommunicationService } from './../../shared/services/listener-service/observable-service';
+import { AppListenerModule } from './../../components/app-listener/app-listener.module'
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    TranslateModule,
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     AppValidatorModule,
@@ -25,9 +27,9 @@ import {AppListenerModule} from './../../components/app-listener/app-listener.mo
     ProductRoutingModule,
     AppListenerModule
   ],
-  declarations: [ ProductComponent, DetailComponent ],
+  declarations: [ProductComponent, DetailComponent],
   providers: [
-    HttpService, UtilService, ProductService,CommonCommunicationService
+    HttpService, UtilService, ProductService, CommonCommunicationService
   ],
   // exports:[AppListenerComponent]
 })
