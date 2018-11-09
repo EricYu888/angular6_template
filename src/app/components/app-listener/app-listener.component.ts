@@ -11,11 +11,12 @@ import { Subscription } from 'rxjs';
 export class AppListenerComponent implements OnInit, OnDestroy {
 
   @Input() public age: any;
+  @Input() public items = [];
   @Output() public onClick = new EventEmitter<any>();
 
   subscription: Subscription;
   user = {
-    name: "233" 
+    name: "233"
   };
   constructor(public communicationService: CommonCommunicationService) { }
 
