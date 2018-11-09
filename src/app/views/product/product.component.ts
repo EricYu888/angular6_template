@@ -67,7 +67,7 @@ export class ProductComponent implements OnInit {
 
   changeTranslate()
   {
-
+    this.translate.use('en');
   }
 
   checkChange(item) {

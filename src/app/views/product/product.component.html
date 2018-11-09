@@ -32,7 +32,7 @@
                         <button *ngIf="canDelete()" type="button" class="btn btn-danger active" (click)="batchDelete();">批量删除</button>
                     </P>
                     <app-listener></app-listener>
-                    
+                    {{'welcome'|translate}}
                     <div *ngFor="let alert of alertsDismiss">
                         <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
                     </div>
