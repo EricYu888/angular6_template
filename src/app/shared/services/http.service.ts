@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
-import { DOMAIN}  from './../../shared/constants';
+import { DOMAIN } from './../../shared/constants';
+import { promise } from 'selenium-webdriver';
+import { resolve } from 'url';
+import { reject } from 'q';
 declare var require: any;
 // const DOMAIN = require('../config.json').DOMAIN;
 const headers = new HttpHeaders()
@@ -42,6 +45,36 @@ export class HttpService {
             });
         })
     }
+
+    async getAsyncData(url, paraJson?): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+            let perferences = { headers };
+            if (paraJson) {
+                let params = new HttpParams();
+                for (const item in paraJson) {
+                    params = params.set(item, paraJson[item])
+                }
+                perferences['params'] = params;
+            }
+            this.http.get(url, perferences).subscribe(res => {
+                resolve(res)
+            }, (err: HttpErrorResponse) => {
+                if (err.error instanceof Error) {
+                    console.log('An error occurred:', err.error.message);
+                    reject(err.error);
+                }
+                else {
+                    console.log(`Backend retruned code ${err.status},body was ${err.error}`)
+                }
+            }
+            )
+        })
+    }
+
+
+
+
     public post(url, body): Promise<any> {
         return new Promise((resolve, reject) => {
             this.http.post(`${DOMAIN}${url}`, body, { headers }).subscribe(data => {
@@ -59,6 +92,7 @@ export class HttpService {
             }
         })
     }
+
     public put(url, body): Promise<any> {
         return new Promise((resolve, reject) => {
             this.http.put(`${DOMAIN}${url}`, body, { headers }).subscribe(data => {
@@ -74,6 +108,7 @@ export class HttpService {
             });
         })
     }
+
     public uploadFile(url, file, doprocess?: (process: number, response: any) => void) {
         const req = new HttpRequest('POST', `${DOMAIN}${url}`, file, {
             reportProgress: true,
@@ -89,6 +124,7 @@ export class HttpService {
             }
         });
     }
+
     public delete(url, paramJson?): Promise<any> {
         return new Promise((resolve, reject) => {
             let perferences = { headers };
@@ -113,5 +149,6 @@ export class HttpService {
             });
         })
     }
+
 
 }
