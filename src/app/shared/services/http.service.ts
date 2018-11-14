@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse, HttpRequest, HttpEventType, HttpEvent, HttpResponse } from '@angular/common/http';
 import { DOMAIN } from './../../shared/constants';
 import { promise } from 'selenium-webdriver';
 import { resolve } from 'url';
@@ -67,12 +67,46 @@ export class HttpService {
                 else {
                     console.log(`Backend retruned code ${err.status},body was ${err.error}`)
                 }
+
             }
+
             )
         })
     }
 
+    async getAsyncData_E(url, paraJson?): Promise<any> {
 
+        return new Promise((resolve, reject) => {
+            let perferences = { headers };
+            if (paraJson) {
+                let params = new HttpParams();
+                for (const item in paraJson) {
+                    params = params.set(item, paraJson[item])
+                }
+                perferences['params'] = params;
+            }
+            this.http.get(url, perferences).subscribe(
+                (event: HttpEvent<any>) => {
+                    switch (event.type) {
+                        case HttpEventType.Sent:
+                            console.log("Request sent!")
+                            break;
+                        case HttpEventType.ResponseHeader:
+                            console.log("Response Header Received")
+                            break;
+                        case HttpEventType.DownloadProgress:
+                            const kbLoaded = Math.round(event.loaded / 1024);
+                            console.log(`Download in process,${kbLoaded}kb loaded.`)
+                            break;
+                        case HttpEventType.Response:
+                            console.log("Request Done",event.body);
+                            break;
+                    }
+                }
+
+            )
+        })
+    }
 
 
     public post(url, body): Promise<any> {
