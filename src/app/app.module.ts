@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { UtilService, AuthGuard, CommonCommunicationService } from './shared';
@@ -11,6 +11,7 @@ import { AppListenerModule } from './components/app-listener/app-listener.module
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppService } from './app.service';
+import { AuthInterceptor } from './shared/services/authInterceptor.service';
 // Import containers
 import {
   FullLayoutComponent,
@@ -77,6 +78,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { from } from 'rxjs/observable/from';
 
 export function createTranslateHttpLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -114,6 +116,7 @@ export function createTranslateHttpLoader(http: HttpClient) {
     AppModalService, AppLoadingService, AppAlertService, AppHeaderService,
     CommonCommunicationService,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AppService
   ],
   bootstrap: [AppComponent]
